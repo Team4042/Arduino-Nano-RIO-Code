@@ -5,7 +5,7 @@ Pixy pixy;
 int digitalPinOut = 3;
 //Length of 5
 int serialArrayRIO[5];
-int signature, x, y, width, height;
+int signature, x, y, area;
 
 void setup()
 {
@@ -16,14 +16,12 @@ void setup()
   signature = A0;
   x = A1;
   y = A2;
-  width = A3;
-  height = A4;
+  area = A3;
   
   pinMode(signature, OUTPUT);
   pinMode(x, OUTPUT);
   pinMode(y, OUTPUT);
-  pinMode(width, OUTPUT);
-  pinMode(height, OUTPUT);
+  pinMode(area, OUTPUT);
   
   pixy.init();
 }
@@ -46,14 +44,12 @@ void loop()
         serialArrayRIO[0] = pixy.blocks[j].signature;
         serialArrayRIO[1] = pixy.blocks[j].x;
         serialArrayRIO[2] = pixy.blocks[j].y;
-        serialArrayRIO[3] = pixy.blocks[j].width;
-        serialArrayRIO[4] = pixy.blocks[j].height;
+        serialArrayRIO[3] = (pixy.blocks[j].width * pixy.blocks[j].height)/4;
         
         analogWrite(signature, serialArrayRIO[0]);
         analogWrite(x, serialArrayRIO[1]);
         analogWrite(y, serialArrayRIO[2]);
-        analogWrite(width, serialArrayRIO[3]);
-        analogWrite(height, serialArrayRIO[4]);
+        analogWrite(area, serialArrayRIO[3]);
       }
     }
   }  
